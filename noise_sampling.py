@@ -6,6 +6,7 @@ import scipy.io as sio
 from PIL import Image
 from scipy.stats import ks_2samp
 import argparse
+import os
 
 
 def inv_sampling(x,bin_width= 0.00001,test_samples=500):        
@@ -129,7 +130,8 @@ if __name__=='__main__':
 
     parser = argparse.ArgumentParser(description='Argparser')
     parser.add_argument("--img_dir", help="Directory of input image")
-    parser.add_argument("--n_obs", default=1, type=int, help="Number of generated noisy image for each image") 
+    parser.add_argument("--n_obs", default=1, type=int, help="Number of generated noisy image for each image")
+    parser.add_argument("--out_dir", help="Directory of output image")
     args = parser.parse_args()
 
     gt_dir = args.img_dir 
@@ -145,5 +147,9 @@ if __name__=='__main__':
         img_syn_noisy = add_noise(img_gt,a,b) 
         #scale and qunatize
         img_syn_noisy_q = (img_syn_noisy * 255.0).round().clip(0, 255).astype(np.uint8)
+        img_name = os.path.basename(gt_dir)
+        img_name = " ".join(img_name.split(".")[:-1]) 
+        output_name = args.out_dir+"/"+img_name+"_n"+str(i+1)+".png"
         #show/save       
-        to_ImageFromArray(img_syn_noisy).show('Synthetic noise + GT')   
+        to_ImageFromArray(img_syn_noisy).save(output_name)   
+        #to_ImageFromArray(img_syn_noisy).show()
