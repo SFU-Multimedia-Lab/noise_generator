@@ -8,9 +8,9 @@ model has two parameters: 𝑎 and 𝑏, where 𝑎 is related to the variance o
 and 𝑏 the variance of the Gaussian component. The Smartphone Image Denoising Dataset (SIDD) is
 used to estimate 𝑎 and 𝑏 for each of the color components (R,G,B).
 
-The following example generates N number of noisy image for the given $IMG_DIR using the provided noise generator
+The following example generates N number of noisy image for the given $IMG_DIR using the provided noise generator and saves them in OUT_DIR
 ```python
-python ./noise_sampling.py --img_dir $IMG_DIR --n_obs $N
+python ./noise_sampling.py --img_dir $IMG_DIR --n_obs $N --out_dir $OUT_DIR
 ```
 
 The code first obtains (𝑎, 𝑏) for each color component. Then generates noisy image according to the sampled parameters.
